@@ -97,10 +97,10 @@ def print_isosceles_triangle():
 
 
 if __name__ == '__main__':
-    # play_fist_game()
-    # play_fist_game2()
-    # print_mult_tables()
-    # print_square()
-    # print_triangle_left()
-    # print_triangle_right()
-    print_isosceles_triangle()
+    # play_fist_game()              # 猜拳游戏1
+    # play_fist_game2()             # 猜拳游戏2
+    # print_mult_tables()           # 打印九九乘法表
+    # print_square()                # 打印正方形
+    # print_triangle_left()         # 打印左对齐三角形
+    # print_triangle_right()        # 打印右对齐三角形
+    print_isosceles_triangle()      # 打印等腰三角形
