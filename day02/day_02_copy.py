@@ -156,7 +156,7 @@ def pub_concat():
     # 获取列表各元素及下标
     for i, e in enumerate(['a', 'b', 'c']):
         print(f"index: {i}, value: {e}")
-    print("-"*50)
+    print("-" * 50)
 
     # 取出所有字母`o`的下标
     s = 'afdjasofasfoafdaoooadfafoafasdfo'
@@ -171,7 +171,7 @@ def genex_concat():
     nums = [i for i in range(0, 10, 2)]
     print(f"一个偶数列表：{nums}")
     """
-        [(1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2),
+        [(1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)],
     """
     demo = [(i, j) for i in range(1, 3) for j in range(3)]
     print(demo)
@@ -198,8 +198,8 @@ def genex_concat():
     """
     创建一个集合，元素分别为下述列表个元素的平方
     """
-    nums  = [2, 4, 6]
-    set1 = {ele**2 for ele in nums}
+    nums = [2, 4, 6]
+    set1 = {ele ** 2 for ele in nums}
     print(f"set: {set1}")
 
 
