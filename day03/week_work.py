@@ -5,7 +5,9 @@
 # Time       ：2024/7/23 下午2:44
 # Author     ：Li
 """
+import os
 import random
+import shutil
 import sys
 
 
@@ -335,8 +337,143 @@ class Day2:
         print(res)
 
 
+class Day3:
+    def __init__(self):
+        print("day03".center(60, "="))
+
+    def return_mult_value(self):
+        """多个返回值"""
+        return 1, 2, 'a', 'b'
+
+    def fun_params(self, name, age, default="默认值"):
+        """default"""
+        print(f"姓名：{name}, 年龄：{age}, default={default}")
+
+    def args_params(self, *args):
+        """typle"""
+        print(f"type: {type(args)}, args={args}")
+
+    def kwargs_params(self, **kwargs):
+        """k:v"""
+        print(f"type: {kwargs}, kwargs:{kwargs}")
+
+    def file_operator(self):
+        """文件操作"""
+        with open("./test.txt", "r", encoding="utf-8") as f:
+            print(f"文件前10个字节：{f.read(10)}")
+            print(f"当前指针位置：{f.tell()}")
+            print(f"剩余内容：\n{f.read()}")
+            print(f"当前指针位置：{f.tell()}")
+            print(f"设置指针至起始位置：{f.seek(0, 0)}")
+            print(f"当前指针位置：{f.tell()}")
+            print(f"第一行内容：{f.readline()}")
+            print(f"当前指针位置: {f.tell()}")
+            print(f"文件剩余内容: \n{f.readlines()}")
+            print(f"将指针移动到文件5的位置：{f.seek(5, 0)}")
+            print(f"当前指针位置: {f.tell()}")
+            print(f"将指针移动到文件末尾：{f.seek(0, 2)}")
+
+    def os_concat(self):
+        """os 包的一些方法"""
+        print("os.mkdir('dir')创建一个空文件夹")
+        # os.mkdir("tmp_dir")
+        print("os.makedirs('dirs')递归创建文件夹")
+        # os.makedirs("tmp_dir/1/2/3")
+        print("os.remove('dir')删除空文件夹")
+        # os.remove('tmp_dir')
+        print("shutil.rmtree('dirs')")
+        print("os.rename('old_name', 'new_name')文件重命名")
+        print(f"获取当前目录,os.getcwd(): {os.getcwd()}")
+        print(f"切换目录,os.chdir('dir'): {os.chdir('../')}")
+        print(f"获取当前目录,os.getcwd(): {os.getcwd()}")
+        print(f"获取当前目录的父级目录, os.path.dirname(): {os.path.dirname(os.getcwd())}")
+        print(f"获取目录中的文件 目录, os.listdir(): {os.listdir()}")
+
+    def lambda_concat(self):
+        """lambda"""
+        fn1 = lambda x: x + 1
+        print(f"fn1: {fn1(1)}")
+        fn2 = lambda x, y: x + y
+        print(f"fn2: {fn2(1, 2)}")
+        fn3 = lambda x, y, z=10: x + y + z
+        print(f"fn3: {fn3(1, 2)}")
+        print(f"fn3: {fn3(1, 2, 3)}")
+        fn4 = lambda x, y: x if x > y else y
+        print(f"fn4: {fn4(3, 4)}")
+        ll = [
+            {"name": "a", "age": 27},
+            {"name": "b", "age": 24},
+            {"name": "c", "age": 29},
+        ]
+        ll.sort(key=lambda x: x["age"])
+        print(ll)
+
+
+class Day4:
+    def __init__(self):
+        print("day04".center(60, '='))
+
+    def ans_1(self):
+        """列表[1,2,3,4,5,5,2,3,2,4]"""
+        l = [1, 2, 3, 4, 5, 5, 2, 3, 2, 4]
+        res = []
+        for e in l:
+            if e not in res:
+                res.append(e)
+
+    def ans_2(self):
+        """
+        比如有这样一个文件data.txt内存在以下内容（15分）
+        ----------------------------
+        lucy:21,tom:30,xiaoming:18,xiaohong:15,xiaowang:20,xiaohei:19
+        ----------------------------
+        请通过代码读取文件并输出年龄大于18岁的人名
+        """
+        strs = "lucy:21,tom:30,xiaoming:18,xiaohong:15,xiaowang:20,xiaohei:19"
+        tmp_list = strs.split(",")
+        for ele in tmp_list:
+            tmp = ele.split(":")
+            if int(tmp[1]) > 18:
+                print(f"name: {tmp[0]}, age: {tmp[1]}")
+
+    def ans_3(self):
+        """
+        请用列表推导式得出1-100能被3整除的数（5分）
+        """
+        print(f"1-100能被3整除的数：{[i for i in range(101) if i % 3 == 0]}")
+
+    def ans_4(self):
+        """
+        有一堆字符串，“welocme to super&Test”，打印出emcolew ot tseT&repus全部单词原位置反转，不能使用索引[::-1]输出或者reverse/reversed函数实现，自己写字符串首尾交换方法（15分）
+        """
+        strs = "welocme to super&Test"
+        tmp_strs = strs.split(" ")
+        res = ""
+
+        def str_parse(s: str) -> str:
+            tmp = ""
+            for ele in s:
+                tmp = ele + tmp
+            return tmp
+
+        for s in tmp_strs:
+            res += f"{str_parse(s)} "
+        print(f"res: {res.strip()}")
+
+    def ans_5(self, n):
+        """递归实现斐波那契数列"""
+        if n in [1, 2]:
+            return 1
+        return self.ans_5(n - 1) + self.ans_5(n - 2)
+
+    def ans_6(self):
+        """将各元素转换为int类型"""
+        tmp = ["1", "2", "3"]
+        print(f"转换结果：{[int(e) for e in tmp]}")
+
+
 if __name__ == '__main__':
-    # day1 = Day1()
+    day1 = Day1()
     # day1.format_str()
     # day1.type_con()
     # day1.operator()
@@ -360,4 +497,23 @@ if __name__ == '__main__':
     # day2.ans_7()
     # day2.ans_8()
     # day2.ans_9()
-    day2.ans_10()
+    # day2.ans_10()
+    day3 = Day3()
+    # print(day3.return_mult_value())
+    # day3.fun_params("Lll", 20)
+    # day3.fun_params("Lll", 20, "ddddd")
+    # day3.fun_params("ll", age=3, default="None")
+    # day3.args_params(1, 2, 3)
+    # day3.args_params(*('a', 'b', 'c'))
+    # day3.kwargs_params(name="lll", age=30)
+    # day3.kwargs_params(**{"name": "lll", "age": 20})
+    # day3.file_operator()
+    # day3.os_concat()
+    # day3.lambda_concat()
+    day4 = Day4()
+    day4.ans_1()
+    day4.ans_2()
+    day4.ans_3()
+    day4.ans_4()
+    for i in range(1, 10):
+        print(day4.ans_5(10), end=" ")
