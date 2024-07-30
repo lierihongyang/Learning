@@ -279,7 +279,7 @@ class Day2:
             if i == 1 or i == 2:
                 res.append(1)
             else:
-                a, b = a, a + b
+                a, b = b, a + b
                 res.append(b)
         print(f"前12位斐波那契数：{res}")
 
@@ -288,7 +288,7 @@ class Day2:
         res = [0, 1]
         for i in range(2, 101):
             for j in range(2, i):
-                if i % 2 == 0:
+                if i % j == 0:
                     break
             else:
                 res.append(i)
