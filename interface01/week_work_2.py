@@ -5,7 +5,9 @@
 # Time       ：2024/7/30 下午3:01
 # Author     ：Li
 """
+import os
 import random
+import shutil
 import sys
 
 
@@ -277,6 +279,106 @@ class Day2:
         print(res)
 
 
+class Day3:
+    def __init__(self):
+        print("day03".center(60, "="))
+
+    def return_values(self):
+        return 1, "a"
+
+    def fun_params(self, name, age, default="default", *args, **kwargs):
+        strs = f"""
+name: {name};
+age: {age};
+default: {default};
+args: {args}
+kwargs: {kwargs}
+"""
+        print(strs)
+
+    def file_operator(self):
+        """文件操作"""
+        with open("./烤地瓜.py", "r") as f:
+            print(f"读取文件前10个字节：{f.read(10)}")
+            print(f"查看当前指针位置：{f.tell()}")
+            print(f"文件剩余内容：{f.read()}")
+            print(f"将指针移动到开始：{f.seek(0, 0)}")
+            print(f"查看当前指针位置：{f.tell()}")
+            print(f"文件第一行内容：{f.readline()}")
+            print(f"文件剩余内容：{f.readlines()}")
+            print(f"将指针移动到5的位置：{f.seek(5, 0)}")
+            print(f"将指针移动到文件末：{f.seek(0, 2)}")
+
+    def os_model(self):
+        """os模块的一些方法"""
+        print("os.mkdir(), 创建一个空文件夹")
+        # os.mkdir("tmp")
+        print("os.makedirs(), 递归创建多级目录")
+        # os.makedirs("tmp/1/2")
+        print("os.remove()删除空文件夹")
+        # os.remove("tmp")
+        print("shutil.rmtree()删除非空文件夹")
+        # shutil.rmtree("tmp/1/2")
+        print("os.rename(old, new)文件重命名")
+        print(f"获取当前目录：{os.getcwd()}")
+        print(f"切换目录：{os.chdir('../')}")
+        print(f"获取父级目录：{os.path.dirname(os.getcwd())}")
+        print(f"列举目录中的文件、文件夹：{os.listdir()}")
+
+
+class Day4:
+    def __init__(self):
+        print("day04".center(60, "="))
+
+    def ans_1(self):
+        """列表[1,2,3,4,5,5,2,3,2,4]去重"""
+        l = [1, 2, 3, 4, 5, 5, 2, 3, 2, 4]
+        res = []
+        for ele in l:
+            if ele not in res:
+                res.append(ele)
+        print(f"去重后：{res}")
+
+    def ans_2(self):
+        strs = "lucy:21,tom:30,xiaoming:18,xiaohong:15,xiaowang:20,xiaohei:19"
+        tmp_list = strs.split(",")
+        for ele in tmp_list:
+            tmp = ele.split(":")
+            if int(tmp[1]) > 18:
+                print(f"name: {tmp[0]}, age: {tmp[1]}")
+
+    def ans_3(self):
+        """1-100之间能被3整除的数"""
+        print(f"res: {[i for i in range(1, 101) if i % 3 == 0]}")
+
+    def ans_4(self):
+        """字符串中的每个单词反转"""
+        strs = "welocme to super&Test"
+        tmp_strs = strs.split(" ")
+        res = ""
+
+        def str_rev(s: str) -> str:
+            tmp = ""
+            for e in s:
+                tmp = e + tmp
+            return tmp
+
+        for s in tmp_strs:
+            res += f"{str_rev(s)} "
+        print(res.strip())
+
+    def ans_5(self, n: int):
+        """递归实现斐波那契"""
+        if n == 1 or n == 2:
+            return 1
+        return self.ans_5(n - 1) + self.ans_5(n - 2)
+
+    def ans_6(self):
+        """将列表中个元素转换成int类型"""
+        l = ["1", "2", "3"]
+        print(f"res: {[int(i) for i in l]}")
+
+
 if __name__ == '__main__':
     day1 = Day1()
     # day1.format_str()
@@ -297,6 +399,22 @@ if __name__ == '__main__':
     # day2.ans_5()
     # day2.ans_6()
     # day2.ans_7()
-    day2.ans_8()
-    day2.ans_9()
-    day2.ans_10()
+    # day2.ans_8()
+    # day2.ans_9()
+    # day2.ans_10()
+    day3 = Day3()
+    # print(day3.return_values())
+    # day3.fun_params("lll", 25)
+    # day3.fun_params("lll", age=25, default="默认")
+    # day3.fun_params("lll", 25, "默认", "a", "b", "c", key1="value", key2="value")
+    # day3.fun_params("lll", 25, "默认", ("a", "b", "c"), {"key1": "value", "key2": "value"})
+    # day3.fun_params("lll", 25, "默认", *("a", "b", "c"), **{"key1": "value", "key2": "value"})
+    # day3.file_operator()
+    # day3.os_model()
+    day4 = Day4()
+    # day4.ans_1()
+    # day4.ans_2()
+    # day4.ans_3()
+    # day4.ans_4()
+    # print(day4.ans_5(10))
+    day4.ans_6()
