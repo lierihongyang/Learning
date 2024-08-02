@@ -5,10 +5,13 @@
 # Time       ：2024/7/30 下午3:01
 # Author     ：Li
 """
+import json
 import os
 import random
 import shutil
 import sys
+
+import requests
 
 
 class Day1:
@@ -379,6 +382,72 @@ class Day4:
         print(f"res: {[int(i) for i in l]}")
 
 
+class RoastPotato:
+    """烤地瓜"""
+
+    def __init__(self):
+        print("烤地瓜".center(60, "="))
+        self.cook_time = 0
+        self.status = "生的"
+        self.seasoning = []
+
+    def cooking(self, t):
+        self.cook_time += t
+        if 0 <= self.cook_time < 3:
+            self.status = "生的"
+            print()
+        elif 3 <= self.cook_time < 5:
+            self.status = "半生不熟的"
+        elif 5 <= self.cook_time <= 8:
+            self.status = "熟的"
+        elif self.cook_time > 8:
+            self.status = "糊了"
+        else:
+            print("烘烤时间不合理")
+
+    def add_sea(self, *args):
+        """添加调料"""
+        self.seasoning.extend(args)
+
+    def __str__(self):
+        return f"烘培时间：{self.cook_time}分钟, 地瓜状态：{self.status}, 添加了{self.seasoning}"
+
+
+class ReqCont:
+    """请求的练习"""
+
+    def __init__(self, url, data=None, params=None):
+        self.url = url
+        self.data = data
+        self.params = params
+
+    def req_get(self):
+        """get请求"""
+        # params接受的数据会被拼接到url中
+        response = requests.get(url=self.url, params=self.params)
+
+        print(f"响应对象: {response}")
+        print(f"请求对象: {response.request}")
+        print(f"状态码: {response.status_code}")
+        print(f"响应体: {response.text}")
+        print(f"json格式响应: {response.json()}")
+        print(f"字节格式响应: {response.content}")
+        print("=" * 60)
+        print(f"请求头: {response.request.headers}")
+        print(f"请求体(get请求没有): {response.request.body}")
+        print(f"请求地址: {response.url}")
+
+    def post_frame(self):
+        # data接收的参数会被传递到请求体中
+        response = requests.post(self.url, data=self.data)
+        print(f"响应体: {response.text}")
+
+    def post_json(self):
+        # response = requests.post(self.url, data=json.dumps(self.data))
+        response = requests.post(self.url, json=self.data)
+        print(f"响应体: {response.json()}")
+
+
 if __name__ == '__main__':
     day1 = Day1()
     # day1.format_str()
@@ -417,4 +486,23 @@ if __name__ == '__main__':
     # day4.ans_3()
     # day4.ans_4()
     # print(day4.ans_5(10))
-    day4.ans_6()
+    # day4.ans_6()
+    r = RoastPotato()
+    # print(r)
+    # r.cooking(1)
+    # print(r)
+    # r.cooking(2)
+    # r.add_sea("椒盐", "糖")
+    # r.cooking(2)
+    # print(r)
+    print("请求".center(60, "="))
+    # url = "https://www.kuaidi100.com/query"
+    # params = {"type": "shunfeng", "postid": "SF1409812533370"}
+    # get_req = ReqCont(url, params=params)
+    # get_req.req_get()
+    # print("*" * 60)
+    url = "http://httpbin.org//post"
+    data = {"username": "liangchao", "password": "123456"}
+    post_res = ReqCont(url=url, data=data)
+    post_res.post_frame()
+    post_res.post_json()
