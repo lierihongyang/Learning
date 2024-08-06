@@ -3,7 +3,7 @@
 """
 @Project ：Learning
 @IDE     ：PyCharm
-@File    ：work.py
+@File    ：work_1.py
 @Author  ：LiChunBo
 @Date    ：2024/7/15 下午4:57
 """
@@ -55,14 +55,14 @@ def print_mult_tables():
     while column <= 9:
         line = 1
         while line <= column:
-            print(f"{line}*{column}={column*line}", end="\t")
+            print(f"{line}*{column}={column * line}", end="\t")
             line += 1
         print()
         column += 1
-    print("="*50)
+    print("=" * 50)
     for i in range(1, 10):
-        for j in range(1, i+1):
-            print(f"{j}*{i}={j*i}", end="\t")
+        for j in range(1, i + 1):
+            print(f"{j}*{i}={j * i}", end="\t")
         print()
 
 
@@ -103,4 +103,4 @@ if __name__ == '__main__':
     # print_square()                # 打印正方形
     # print_triangle_left()         # 打印左对齐三角形
     # print_triangle_right()        # 打印右对齐三角形
-    print_isosceles_triangle()      # 打印等腰三角形
+    print_isosceles_triangle()  # 打印等腰三角形

@@ -2,7 +2,7 @@
 
 """
 @Project ：Learning
-@File    ：work.py
+@File    ：work_1.py
 @Author  ：LiChunBo
 @Date    ：2024/7/18 下午2:49
 """
@@ -51,7 +51,7 @@ def answer_4():
         if i == 1 or i == 2:
             res.append(1)
         else:
-            a, b = b, a+b
+            a, b = b, a + b
             res.append(b)
     print(res)
 
@@ -109,7 +109,7 @@ def answer_8_2():
     tmp_list = list(str1)
     str_length = len(str1)  # 21  10
     for i in range(str_length // 2):
-        tmp_list[i], tmp_list[str_length-1-i] = tmp_list[str_length-1-i], tmp_list[i]
+        tmp_list[i], tmp_list[str_length - 1 - i] = tmp_list[str_length - 1 - i], tmp_list[i]
     res = "".join(tmp_list)
     print(res)
 
