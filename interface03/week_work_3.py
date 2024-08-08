@@ -1,10 +1,16 @@
 # -*- coding: UTF-8 -*-
 import json
+import logging
 import os
 import random
 import shutil
+from io import TextIOWrapper
+from logging.handlers import TimedRotatingFileHandler
 
 import requests
+import xlrd
+import yaml
+from xlrd import Book
 
 
 class Day2:
@@ -423,6 +429,65 @@ class ReqCont:
 
         res = s.get("https://wanandroid.com//user/lg/userinfo/json")
         print(res.text)
+
+
+class GetData:
+
+    def __init__(self, file: str):
+        if file.endswith(".xls"):
+            self.file = xlrd.open_workbook(file)
+        else:
+            self.file = open(file)
+        self.data = []
+
+    def read_xlsx(self) -> list[dict]:
+        """读取excel"""
+        sheet = self.file.sheet_by_index(0)
+        rows = sheet.nrows  # 总行数
+        cols = sheet.ncols  # 总列数
+
+        keys = sheet.row_values(0)  # 获取表头
+        for row in range(1, rows):
+            value = sheet.row_values(row)
+            __data = zip(keys, value)
+            self.data.append(dict(__data))
+        return self.data
+
+    def read_json(self) -> list[dict]:
+        __data = json.load(self.file)
+        return __data
+
+    def read_yaml(self) -> list[dict]:
+        __data = yaml.load(self.file, Loader=yaml.FullLoader)
+        return __data
+
+    def __del__(self):
+        del self.file
+
+
+class LogRecover:
+    """日志记录"""
+
+    def __init__(self, level: str, dir_name: str, in_cmd: bool):
+        formater = logging.Formatter(
+            "日志:%(name)s-级别:%(levelname)s-时间:%(asctime)s-模块:%(module)s.py-第%(lineno)d:%(message)s"
+        )
+        self.logger = logging.getLogger("Test")
+        self.logger.setLevel(level.upper())  # 设置日志级别
+        # 添加文件记录器
+        file_handler = TimedRotatingFileHandler(
+            dir_name + "/testLog/log.log",
+            when="D",  # D 表示天每天 S表示每秒 H表示每小时
+            backupCount=3,  # 表示log文件数量
+            encoding="utf-8"
+        )
+        file_handler.setFormatter(formater)
+        self.logger.addHandler(file_handler)  # 将文件句柄添加到记录器中
+        if in_cmd:  # 确定需要想命令行输出日志时才初始化
+            # 添加命令行记录器
+            cmd_stream = logging.StreamHandler()
+            cmd_stream.setFormatter(formater)
+            self.logger.addHandler(cmd_stream)
 
 
 if __name__ == '__main__':
