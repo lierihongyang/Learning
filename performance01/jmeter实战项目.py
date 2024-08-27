@@ -28,6 +28,7 @@ count = 0
 # 注册接口，JSON入参，返回新用户信息
 @app.route('/register', methods=['POST'])
 def register():
+    global count
     data = request.json
     password = data.get('password')
     username = data.get('username')
@@ -61,6 +62,7 @@ def register():
 
     response = make_response(jsonify(new_user))
     response.set_cookie('uid', new_uid)  # Set Cookie for the new user
+    count += 1
     return response
 
 
@@ -83,9 +85,11 @@ def login():
 # 获取个人信息接口，从Cookie中获取uid
 @app.route('/profile', methods=['GET'])
 def profile():
+    global count
     uid = request.cookies.get('uid')  # 从Cookie中获取uid
 
     if uid in users:
+        count += 1
         return jsonify(users[uid])
     else:
         return jsonify({'message': 'User not found'}), 404
@@ -94,9 +98,11 @@ def profile():
 # 查询商品信息接口
 @app.route('/get_product', methods=['GET'])
 def get_product():
+    global count
     productid = request.args.get('productid')
 
     if productid in products:
+        count += 1
         return jsonify(products[productid])
     else:
         return jsonify({'message': 'Product not found'}), 404
@@ -105,6 +111,7 @@ def get_product():
 # 提交订单接口，JSON入参，使用Cookie中的uid
 @app.route('/submit_order', methods=['POST'])
 def submit_order():
+    global count
     data = request.json
     uid = request.cookies.get('uid')  # 从Cookie中获取uid
     productid = data.get('productid')
@@ -113,6 +120,7 @@ def submit_order():
     if uid in users and productid in products:
         order = {'order_id': order_id, 'productid': productid, 'uid': uid}
         orders[uid].append(order)
+        count += 1
         return jsonify({'message': 'Order submitted successfully', 'order_id': order_id})
     else:
         return jsonify({'message': 'User or product not found'}), 404
@@ -121,16 +129,27 @@ def submit_order():
 # 查询订单接口，从Cookie中获取uid
 @app.route('/get_orders', methods=['GET'])
 def get_orders():
+    global count
     uid = request.cookies.get('uid')  # 从Cookie中获取uid
 
     if uid in users:
+        count += 1
         return jsonify({'orders': orders[uid]})
     else:
         return jsonify({'message': 'User not found'}), 404
 
 
+@app.route("/get_users", methods=["GET"])
+def get_all_users():
+    global count
+    count += 1
+    return jsonify(users), 200
+
+
 @app.route('/del_user', methods=['POST'])
 def del_user():
+    global count
+    count += 1
     data: dict = request.json
     uid = data.get("uid")  # 获取传入的uid
 
