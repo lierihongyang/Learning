@@ -25,6 +25,7 @@ class DBOperate(Thread):
 
         if self.__count == 0:  # 表只创建一次
             self.create_table()
+            self.__count += 1
 
     def create_table(self):
         """创建表"""
@@ -69,7 +70,7 @@ def create_data() -> queue.Queue:
 if __name__ == '__main__':
     q = create_data()
 
-    ts = [DBOperate() for _ in range(50)]  # 50个线程创建10w条数据，11点半开始
+    ts = [DBOperate() for _ in range(50)]  # 50个线程创建10w条数据
     for t in ts:
         t.start()
     for t in ts:
