@@ -23,9 +23,9 @@ class DBOperate(Thread):
         self.db = connect(host=self.host, user=self.user, password=self.pwd, database=self.database)
         self.cursor = self.db.cursor()
 
-        if self.__count == 0:  # 表只创建一次
+        if DBOperate.__count == 0:  # 表只创建一次
             self.create_table()
-            self.__count += 1
+            DBOperate.__count += 1
 
     def create_table(self):
         """创建表"""
