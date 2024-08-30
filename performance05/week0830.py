@@ -42,7 +42,7 @@ def generate_fibe(num: int):
             return 1
         return fibe(num - 1) + fibe(num - 2)
 
-    for i in range(1, num):
+    for i in range(1, num + 1):
         res.append(fibe(i))
     return res
 
