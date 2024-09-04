@@ -68,30 +68,30 @@ def double_sum(num: int):
                 print(f"arr[{i}] + arr[{j}]: {arr[i]}+{arr[j]}={num}")
 
 
-def hui_wen(s: str):
-    """回文字符串, 一个字符串正向读取和反向读取时一样的，那它就是回文字符串"""
-    st = "abccba"
-    tmp_list = list(st)
-    length = len(st) - 1
-    print(tmp_list)
-    """
-    ab
-    abc
-    abcc
-    abccb
-    abccba
-    bc
-    bcc
-    bccb
-    bccba
-    cc
-    ccb
-    ccba
-    cb
-    cba
-    ba
-    """
-    # for i in range(length):
+def longest_str(s: str) -> str:
+    """最长回文字符串, 一个字符串正向读取和反向读取时一样的，那它就是回文字符串"""
+    length = len(s)
+    if length == 0:  # 长度为0返回空串
+        return ""
+    dp = [[False] * length for _ in range(length)]
+
+    # 初始化字符串起始位置及长度
+    start = 0
+    max_len = 1
+
+    # 当字符串一定是回文字符串
+    for i in range(length):
+        dp[i][i] = True
+
+    for i in range(1, length):  # 右边界
+        for j in range(i):  # 左边界
+            if s[j] == s[i]:
+                if i - j + 1 <= 2 or dp[j + 1][i - 1]:
+                    dp[j][i] = True
+                    if i - j + 1 > max_len:
+                        max_len = i - j + 1
+                        start = j
+    return s[start:start + max_len]
 
 
 def pub_prefix():
@@ -124,5 +124,5 @@ if __name__ == '__main__':
     # select_sort()
     # binary_search(8)
     # double_sum(8)
-    # hui_wen("a")
-    pub_prefix()
+    print(longest_str("abccba"))
+    # pub_prefix()
