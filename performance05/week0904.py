@@ -36,8 +36,8 @@ def ans_3():
     3-文件data.txt内存在以下内容(请自行创建,lucy:21,tom:30xiaoming:18,xiaohong:15xiaowang:20,xiaohei:19
 请结合正则的方法找到最大年龄和最小年龄
     """
-    name_pattern = re.compile(r"(.*?):\d\d")
-    age_pattern = re.compile(r":(\d\d)")
+    name_pattern = re.compile(r"([a-z]*?):\d+")
+    age_pattern = re.compile(r":(\d+)")
     info = {}
     with open("./data.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
@@ -47,6 +47,7 @@ def ans_3():
             tmp = zip(names, ages)
             info.update(dict(tmp))
     res = sorted(info.items(), key=lambda ele: int(ele[1]))
+    print(res)
     print(f"""{res[-1][0].replace(',', '')} 的年龄是: {res[-1][-1]},
 {res[0][0].replace(',', '')} 的年龄是: {res[0][-1]}
 """)
